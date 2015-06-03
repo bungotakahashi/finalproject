@@ -21,7 +21,7 @@ if(session_status() == PHP_SESSION_ACTIVE){
 
   echo "<h1>MYBOOKS</h1>
         <p>If you are a new user click <a href='http://web.engr.oregonstate.edu/~takahasb/Final/signup.php'>here</a> to go to the sign up page.</p>
-        <p>LOGIN</p>";
+        <h3>LOGIN</h3>";
 
   /*$que="CREATE TABLE mybooks_users(id INT PRIMARY KEY AUTO_INCREMENT, username VARCHAR (255) UNIQUE NOT NULL, email VARCHAR (255) UNIQUE NOT NULL, 
         password VARCHAR (255) NOT NULL)";
@@ -31,10 +31,13 @@ if(session_status() == PHP_SESSION_ACTIVE){
             die();
   };*/
 
-  echo  '<form action= "http://web.engr.oregonstate.edu/~takahasb/Final/database.php" method= "POST">
-          username:<input type= "text" name="username" id="username_l"><br>
-          password:<input type= "password" name="password" id="password_l"><br>         
-          <input type= "submit" value="Login" name="loginform">
+    
+
+
+  echo  '<form action= "http://web.engr.oregonstate.edu/~takahasb/Final/database.php" id="login" method= "POST"  onsubmit="check_login(); return false" >
+          username:<input type= "text" name="username" id="username_l"> <br>
+          password:<input type= "password" name="password" id="password_l" ><br>         
+          <input type= "submit" id="login2" value="Login" name="loginform" ><span id="loginError"></span><br> 
         </form>';
 
     if(isset($_GET["login"])){

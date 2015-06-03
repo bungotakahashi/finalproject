@@ -19,7 +19,7 @@ echo  '<form  action= "http://web.engr.oregonstate.edu/~takahasb/Final/database.
         email:<input type= "text" id="email_s" name="email" onchange="check(value, name)"><span id="emailError"></span><br>  
         password:<input type= "text" id="password_s" name="password" onchange="check_password(value)"><span id="passwordError"></span><br>   
         Note: Make your password equal to or longer than 6 characters (numbers can be included, of course.)<br>            
-        <input type= "submit" value="Signup" name="signupform"><span id="signupError"></span><br>
+        <input type= "submit" value="Signup" name="signupform" ><span id="signupError"></span><br>
       </form>';
 
    

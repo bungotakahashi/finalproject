@@ -1,5 +1,4 @@
 <?php
-
 ini_set('display_errors', 'On');
 	 $hostname = 'oniddb.cws.oregonstate.edu';
      $databaseName = 'takahasb-db';
@@ -45,6 +44,41 @@ ini_set('display_errors', 'On');
          $stmt->close();
     }
 
+    if (isset($_POST["username"]) && isset($_POST["password"]) && isset($_POST["login"])){
+        //echo "$_GET[name]";
+    //    $message = "wrong answer";
+    //echo "<script type='text/javascript'>alert('$message');</script>";
+
+
+        if (!($stmt = $mydata->prepare("SELECT * FROM mybooks_users WHERE username=?"))){
+          echo "Prepare failed: (" . $mydata->errno . ")" . $mydata->error;
+          echo "click <a href='main.php'>here</a> to return to your inventory.";      
+         }
+        $username = $_POST["username"];
+        $password = md5($_POST["password"]);
+        if(!$stmt->bind_param('s', $username)){
+          echo "Binding parameters failed: (" . $mydata->errno . ")" . $mydata->error;
+          echo "click <a href='main.php'>here</a> to return to your inventory.";
+
+        }
+
+        if (!$stmt->execute()){
+          echo "execute failed :(" . $mydata->errno . ")" . $mydata->error;
+          echo "click <a href='main.php'>here</a> to return to your inventory.";
+        
+          
+        }
+         $stmt->bind_result($r1, $r2, $r3, $r4);
+         $stmt->fetch();
+         if ($r2==$username && $r4==$password){
+            echo "ok";
+         }
+         else {
+            echo "bad";
+         }
+         $stmt->close();
+    }
+
     if (isset($_GET["email"])){
         //echo "$_GET[name]";
 
@@ -77,7 +111,12 @@ ini_set('display_errors', 'On');
         $ema=$_POST["email"];
         $pass=$_POST["password"];
         insert($usr, $ema, $pass);
-        //createtable($usr);
+        $tname=$usr."_table";
+        $que="CREATE TABLE $tname(id INT PRIMARY KEY AUTO_INCREMENT, name VARCHAR (255) UNIQUE NOT NULL, wishlist BOOL NOT NULL DEFAULT 0, favorites BOOL NOT NULL  DEFAULT 0)";
+        if (!$mydata->query($que)){
+          echo "Couldn't make a table: (" . $mydata->errno . ")" . $mydata->error;
+          die();
+        }
         header("Location: final_main.php?signup=1");
         
     }
@@ -107,14 +146,17 @@ ini_set('display_errors', 'On');
       
   }
 
-  if (isset($_POST["loginform"])){
+
+  if (isset($_GET["loginform"])){
+//$message = "wrong answer";
+    // echo "<script type='text/javascript'>alert('$message');</script>";
         $flag=0;
         if (!($stmt = $mydata->prepare("SELECT * FROM mybooks_users WHERE username=BINARY? AND password=BINARY?"))){
           echo "Prepare failed: (" . $mydata->errno . ")" . $mydata->error;
           echo "click <a href='main.php'>here</a> to return to your inventory.";      
          }
-        $name = $_POST["username"];
-        $pass = $_POST["password"];
+        $name = $_GET["username"];
+        $pass = $_GET["password"];
         $pass = md5($pass);
         if(!$stmt->bind_param('ss', $name, $pass)){
           echo "Binding parameters failed: (" . $mydata->errno . ")" . $mydata->error;
@@ -137,7 +179,9 @@ ini_set('display_errors', 'On');
                 $_SESSION['username'] = $r2;
                 $_SESSION['email'] = $r3;
                 $_SESSION['correct'] = 1;
-                header("Location: user.php");
+                //$message = "wrong answer";
+                //echo "<script type='text/javascript'>alert('$message');</script>";
+                header("Location: user.php", true);
             }
             else{
                 header("Location: final_main.php?login=2");
