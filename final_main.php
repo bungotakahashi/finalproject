@@ -39,7 +39,7 @@ if(session_status() == PHP_SESSION_ACTIVE){
           username:<input type= "text" name="username" id="username_l"> <br>
           password:<input type= "password" name="password" id="password_l" ><br>         
           <input type= "submit" id="login2" value="Login" name="loginform" ><span id="loginError"></span><br> 
-        </form>';
+        ';
 
     if(isset($_GET["login"])){
       if($_GET["login"]==2){
@@ -51,6 +51,7 @@ if(session_status() == PHP_SESSION_ACTIVE){
       echo "<h3>Your sign-up was successful! Login and enjoy MYBOOKS!</h3>";
       }
     }
+    echo '</form>';
             // logout function is in content1.php in my program structure.
       
     echo '</body>

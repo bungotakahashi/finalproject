@@ -1,5 +1,5 @@
 <?php
-ini_set('display_errors', 'On');
+//ini_set('display_errors', 'On');
 	 $hostname = 'oniddb.cws.oregonstate.edu';
      $databaseName = 'takahasb-db';
      $username = 'takahasb-db';
@@ -11,8 +11,8 @@ ini_set('display_errors', 'On');
 
      $mydata = new mysqli($hostname, $username, $password, $databaseName);
      if ($mydata->connect_errno){
-       	echo "Couldn't connect to MySQL: (" . $mydata->connect_errno . ")" . $mydata->connect_error;
-  	   	echo "click <a href='final_main.php'>here</a> to return to main page";      
+       	//echo "Couldn't connect to MySQL: (" . $mydata->connect_errno . ")" . $mydata->connect_error;
+  	   	header("Location: final_main.php");            
      }
 
 
@@ -20,21 +20,19 @@ ini_set('display_errors', 'On');
         //echo "$_GET[name]";
 
         if (!($stmt = $mydata->prepare("SELECT * FROM mybooks_users WHERE username=?"))){
-          echo "Prepare failed: (" . $mydata->errno . ")" . $mydata->error;
-          echo "click <a href='main.php'>here</a> to return to your inventory.";      
+          //echo "Prepare failed: (" . $mydata->errno . ")" . $mydata->error;
+          header("Location: signup.php?signup=2");      
          }
         $username = $_GET["name"];
       
         if(!$stmt->bind_param('s', $username)){
-          echo "Binding parameters failed: (" . $mydata->errno . ")" . $mydata->error;
-          echo "click <a href='main.php'>here</a> to return to your inventory.";
-
+          //echo "Binding parameters failed: (" . $mydata->errno . ")" . $mydata->error;
+          header("Location: signup.php?signup=2");      
         }
 
         if (!$stmt->execute()){
-          echo "execute failed :(" . $mydata->errno . ")" . $mydata->error;
-          echo "click <a href='main.php'>here</a> to return to your inventory.";
-        
+          //echo "execute failed :(" . $mydata->errno . ")" . $mydata->error;
+          header("Location: signup.php?signup=2");              
           
         }
          $stmt->bind_result($r1, $r2, $r3, $r4);
@@ -50,20 +48,19 @@ ini_set('display_errors', 'On');
 
 
         if (!($stmt = $mydata->prepare("SELECT * FROM mybooks_users WHERE username=?"))){
-          echo "Prepare failed: (" . $mydata->errno . ")" . $mydata->error;
-          echo "click <a href='main.php'>here</a> to return to your inventory.";      
+          //echo "Prepare failed: (" . $mydata->errno . ")" . $mydata->error;
+          header("Location: final_main.php");      
          }
         $username = $_POST["username"];
         $password = md5($_POST["password"]);
         if(!$stmt->bind_param('s', $username)){
-          echo "Binding parameters failed: (" . $mydata->errno . ")" . $mydata->error;
-          echo "click <a href='main.php'>here</a> to return to your inventory.";
-
+          //echo "Binding parameters failed: (" . $mydata->errno . ")" . $mydata->error;
+          header("Location: final_main.php");      
         }
 
         if (!$stmt->execute()){
-          echo "execute failed :(" . $mydata->errno . ")" . $mydata->error;
-          echo "click <a href='main.php'>here</a> to return to your inventory.";
+          //echo "execute failed :(" . $mydata->errno . ")" . $mydata->error;
+         header("Location: final_main.php");      
         
           
         }
@@ -82,20 +79,20 @@ ini_set('display_errors', 'On');
         //echo "$_GET[name]";
 
         if (!($stmt = $mydata->prepare("SELECT * FROM mybooks_users WHERE email=?"))){
-          echo "Prepare failed: (" . $mydata->errno . ")" . $mydata->error;
-          echo "click <a href='main.php'>here</a> to return to your inventory.";      
+          //echo "Prepare failed: (" . $mydata->errno . ")" . $mydata->error;
+          header("Location: signup.php?signup=2");            
          }
         $email = $_GET["email"];
       
         if(!$stmt->bind_param('s', $email)){
-          echo "Binding parameters failed: (" . $mydata->errno . ")" . $mydata->error;
-          echo "click <a href='main.php'>here</a> to return to your inventory.";
+          //echo "Binding parameters failed: (" . $mydata->errno . ")" . $mydata->error;
+          header("Location: signup.php?signup=2");      
 
         }
 
         if (!$stmt->execute()){
-          echo "execute failed :(" . $mydata->errno . ")" . $mydata->error;
-          echo "click <a href='main.php'>here</a> to return to your inventory.";
+          //echo "execute failed :(" . $mydata->errno . ")" . $mydata->error;
+          header("Location: signup.php?signup=2");      
         
           
         }
@@ -113,7 +110,7 @@ ini_set('display_errors', 'On');
         $tname=$usr."_table";
         $que="CREATE TABLE $tname(id INT PRIMARY KEY AUTO_INCREMENT, name VARCHAR (255) UNIQUE NOT NULL, author VARCHAR (255) NOT NULL, amazon VARCHAR (255) UNIQUE, isbn VARCHAR (255) UNIQUE NOT NULL,  wishlist BOOL NOT NULL DEFAULT 0)";
         if (!$mydata->query($que)){
-          echo "Couldn't make a table: (" . $mydata->errno . ")" . $mydata->error;
+          //echo "Couldn't make a table: (" . $mydata->errno . ")" . $mydata->error;
           die();
         }
         header("Location: final_main.php?signup=1");
@@ -124,19 +121,19 @@ ini_set('display_errors', 'On');
         global $mydata;
         //echo "$name, $ema, $pass";
         if (!($stmt = $mydata->prepare("INSERT INTO mybooks_users(username, email, password) VALUES (?, ?, ?)"))){
-          echo "Prepare failed: (" . $mydata->errno . ")" . $mydata->error;
+         // echo "Prepare failed: (" . $mydata->errno . ")" . $mydata->error;
           echo "Error: click <a href='signup.php'>here</a> to return to sign-up page and try again.";
         }
         $username = $name;
         $email = $ema;
         $password = md5($pass);
         if(!$stmt->bind_param('sss', $username, $email, $password)){
-          echo "Binding parameters failed: (" . $mydata->errno . ")" . $mydata->error;
+         // echo "Binding parameters failed: (" . $mydata->errno . ")" . $mydata->error;
           echo "Error: click <a href='signup.php'>here</a> to return to sign-up page and try again.";
 
         }
         if (!$stmt->execute()){
-          echo "execute failed :(" . $mydata->errno . ")" . $mydata->error;
+          //echo "execute failed :(" . $mydata->errno . ")" . $mydata->error;
           echo "Error: click <a href='signup.php'>here</a> to return to sign-up page and try again.";
         }
         $stmt->close();
@@ -151,19 +148,19 @@ ini_set('display_errors', 'On');
     // echo "<script type='text/javascript'>alert('$message');</script>";
         $flag=0;
         if (!($stmt = $mydata->prepare("SELECT * FROM mybooks_users WHERE username=BINARY? AND password=BINARY?"))){
-          echo "Prepare failed: (" . $mydata->errno . ")" . $mydata->error;
-          echo "click <a href='main.php'>here</a> to return to your inventory.";      
+         // echo "Prepare failed: (" . $mydata->errno . ")" . $mydata->error;
+          header("Location: final_main.php");      
          }
         $name = $_GET["username"];
         $pass = $_GET["password"];
         $pass = md5($pass);
         if(!$stmt->bind_param('ss', $name, $pass)){
-          echo "Binding parameters failed: (" . $mydata->errno . ")" . $mydata->error;
-          echo "click <a href='main.php'>here</a> to return to your inventory.";
-        }
+          //echo "Binding parameters failed: (" . $mydata->errno . ")" . $mydata->error;
+         header("Location: final_main.php");      
+         }
         if (!$stmt->execute()){
-          echo "execute failed :(" . $mydata->errno . ")" . $mydata->error;
-          echo "click <a href='main.php'>here</a> to return to your inventory.";      
+          //echo "execute failed :(" . $mydata->errno . ")" . $mydata->error;
+          header("Location: final_main.php");      
         }
          $stmt->bind_result($r1, $r2, $r3, $r4);
          $stmt->fetch();

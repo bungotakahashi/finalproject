@@ -21,7 +21,10 @@ echo  '<form  action= "http://web.engr.oregonstate.edu/~takahasb/Final/database.
         Note: Make your password equal to or longer than 6 characters (Of course numbers can be included \(•-•)/.)<br>            
         <input type= "submit" value="Signup" id = "signupb" name="signupform" ><span id="signupError"></span><br>
       </form>';
-$main="<button id='goback'><a href=final_main.php>Go back to main page.</a></button>";
+$mainurl="final_main.php";
+$main="<form action='$mainurl' method='get'>
+      <input type='submit' value='Go back to the main page' id='goback' />
+      </form>";
 echo "$main<br>";
  
 
