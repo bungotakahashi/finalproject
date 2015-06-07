@@ -16,7 +16,6 @@ ini_set('display_errors', 'On');
      }
 
 
-
      if (isset($_GET["name"])){
         //echo "$_GET[name]";
 
@@ -112,7 +111,7 @@ ini_set('display_errors', 'On');
         $pass=$_POST["password"];
         insert($usr, $ema, $pass);
         $tname=$usr."_table";
-        $que="CREATE TABLE $tname(id INT PRIMARY KEY AUTO_INCREMENT, name VARCHAR (255) UNIQUE NOT NULL, wishlist BOOL NOT NULL DEFAULT 0, favorites BOOL NOT NULL  DEFAULT 0)";
+        $que="CREATE TABLE $tname(id INT PRIMARY KEY AUTO_INCREMENT, name VARCHAR (255) UNIQUE NOT NULL, author VARCHAR (255) NOT NULL, amazon VARCHAR (255) UNIQUE, isbn VARCHAR (255) UNIQUE NOT NULL,  wishlist BOOL NOT NULL DEFAULT 0)";
         if (!$mydata->query($que)){
           echo "Couldn't make a table: (" . $mydata->errno . ")" . $mydata->error;
           die();
@@ -193,6 +192,163 @@ ini_set('display_errors', 'On');
 
         
     }
+ 
+    if(isset($_GET["favorite"]) && $_GET["favorite"]==1){
+      session_start();
+        if(session_status() == PHP_SESSION_ACTIVE){
+            $user = $_SESSION['username'];
+               
+        }
+        else {
+          return 0;
+        }
+  
+      $tbl=$user."_table";
+      if (!($stmt = $mydata->prepare("INSERT INTO $tbl(name, author, amazon, isbn, wishlist) VALUES (?, ?, ?, ?, ?)"))){
+          echo "Prepare failed";
+          return 0;
+      }
+      $name=$_GET["name"];
+      $author=$_GET["author"];
+      $amazon=$_GET["amazon"];
+      $isbn=$_GET["isbn"];
+      $wish=1;
+   
+      if(!$stmt->bind_param('ssssi', $name, $author, $amazon, $isbn, $wish)){
+          echo "Binding parameters failed";
+          return 0;
+        }
+        if (!$stmt->execute()){
+          echo "execute failed"; 
+          return 0;
+        }
+        $stmt->close();      
+        //header("Location: user.php");
+    }
+
+    if(isset($_GET["favorite"]) && $_GET["favorite"]==2){
+      session_start();
+        if(session_status() == PHP_SESSION_ACTIVE){
+            $user = $_SESSION['username'];
+               
+        }
+        else {
+          return 0;
+        }
+            
+      $tbl=$user."_table";
+      if (!($stmt = $mydata->prepare("SELECT * FROM $tbl WHERE wishlist=?"))){
+          echo "Prepare failed";
+          return 0;      
+         }
+        $wish = 1;
+      
+        if(!$stmt->bind_param('i', $wish)){
+          echo "Binding parameters failed";
+          return 0;
+        }
+
+        if (!$stmt->execute()){
+          echo "execute failed";
+          return 0;        
+          
+        }
+        $arr=array();
+      
+        $result = $stmt->get_result();
+         while($row = $result->fetch_assoc()){
+            $arr[]=array(
+            'id'=>$row['id'],
+            'name'=>$row['name'],
+            'author'=>$row['author'],
+            'amazon'=>$row['amazon'],
+            'isbn'=>$row['isbn'],
+            'wishlist'=>$row['wishlist']
+            );
+          }
+          echo json_encode($arr);
+        $stmt->close();
+
+    }
+
+     if(isset($_GET["favorite"]) && $_GET["favorite"]==3){
+      session_start();
+        if(session_status() == PHP_SESSION_ACTIVE){
+            $user = $_SESSION['username'];
+               
+        }
+        else {
+          return 0;
+        }
+            
+      $tbl=$user."_table";
+      if (!($stmt = $mydata->prepare("DELETE FROM $tbl WHERE name=?"))){
+          echo "Prepare failed";
+          return 0;      
+         }
+        $name = $_GET["name"];
+      
+        if(!$stmt->bind_param('s', $name)){
+          echo "Binding parameters failed";
+          return 0;
+        }
+
+        if (!$stmt->execute()){
+          echo "execute failed";
+          return 0;        
+          
+        }
     
-    // $mydata->close();
+        
+        $stmt->close();
+
+    }
+
+    if(isset($_GET["favorite"]) && $_GET["favorite"]==4){
+      session_start();
+        if(session_status() == PHP_SESSION_ACTIVE){
+            $user = $_SESSION['username'];
+               
+        }
+        else {
+          return 0;
+        }
+            
+      $tbl=$user."_table";
+      if (!($stmt = $mydata->prepare("SELECT * FROM $tbl WHERE isbn=?"))){
+          echo "Prepare failed";
+          return 0;      
+         }
+        $isbn = (string)$_GET["isbn"];
+      
+        if(!$stmt->bind_param('s', $isbn)){
+          echo "Binding parameters failed";
+          return 0;
+        }
+
+        if (!$stmt->execute()){
+          echo "execute failed";
+          return 0;        
+          
+        }
+        $arr=array();
+      
+        $result = $stmt->get_result();
+         while($row = $result->fetch_assoc()){
+            $arr[]=array(
+            'id'=>$row['id'],
+            'name'=>$row['name'],
+            'author'=>$row['author'],
+            'amazon'=>$row['amazon'],
+            'isbn'=>$row['isbn'],
+            'wishlist'=>$row['wishlist']
+            );
+          }
+          echo json_encode($arr);
+        $stmt->close();
+
+    }
+
+
+    
 ?>

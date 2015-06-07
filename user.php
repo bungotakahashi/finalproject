@@ -14,7 +14,7 @@ echo '<!DOCTYPE html>
 <html>
 <head>
   <meta charset= "UTF-8">
-    <title>MYBOOKS</title>
+    <title>MYBOOKS 2015</title>
     <link rel= "stylesheet" href="final2.css">
     <script type="text/javascript" src="https://www.google.com/jsapi"></script>
     <script src= "final.js"></script>
@@ -22,33 +22,44 @@ echo '<!DOCTYPE html>
 <body>';
 
 if(session_status() == PHP_SESSION_ACTIVE){
-	echo "<h1>Hello $_SESSION[username].</h1>" ;
-	$logout="<a href=user.php?logout=1>here</a>";
-	echo "click $logout to logout<br>";
-  echo '<div id="viewerCanvas" style="width: 600px; height: 500px"></div>';
+  $x=rand (1, 3);
+  $hello="";
+  if ($x==1){$hello="Hello ";}
+  else if ($x==2){$hello="What's up ";}
+  else{$hello="How's it going, ";}
+	echo "<h1 id='hello'>$hello $_SESSION[username] \(•_•)/</h1>" ;
+
+	$logout="<button id='logout'><a href=user.php?logout=1>LOGOUT</a></button>";
+	echo "$logout<br>";
+ 
   echo "<br><br>";
-  echo '<input type="button" value="Best sellers" onclick="fetchData()"></input>';
-  echo ' <div class= "contents">
-      <div id= "books">
-        <h1>BESTSELLERS</h1>
-        <div id="box1" style="width: 600px; height: 500px; overflow:scroll">
-        </div>
+  echo "MONTH(1-12):<input type= 'number' id = 'month'>";
+  echo '<input type="button" id="fetch" value="Best sellers" onclick="fetchData()"></input>';
+  //echo '<input type= "submit" value="Best Sellers"><br>';
+  echo '<div class= "contents">
+          <div id= "books">
+            <h1 id=title>Best Sellers in 2015</h1>
 
-      </div>
+            <div id="box1">
+            <p id = "nodata"></p>
+            </div>
+          </div>
+          
+        
+          <div id="viewerCanvas" >
+          <h1>Preview</h1>
+          </div>
 
-
-      <div id= "favorites">
-        <h1>Favorite GISTS</h1>
-        <div id="box2">
-          <p>favorites</p>
-        </div>
-
-
-      </div>';
+          <div id= "favorites">
+            <h1>Wish List</h1>
+            <div id="box2">
+            </div>
+          </div>
+        
+        </div>';
 
 }
 
-
+echo "</body>
+</html>";
 ?>
-</body>
-</html>

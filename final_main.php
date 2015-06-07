@@ -11,16 +11,17 @@ if(session_status() == PHP_SESSION_ACTIVE){
     <head>
       <meta charset= "UTF-8">
       <title>MYBOOKS</title>
-      <link rel="stylesheet" href="style.css">
+      <link rel="stylesheet" href="final.css">
       <script src= "final.js"></script>
       </head>
-    <body>';
+    <body id = "main">';
   include "database.php";
 
 
 
   echo "<h1>MYBOOKS</h1>
-        <p>If you are a new user click <a href='http://web.engr.oregonstate.edu/~takahasb/Final/signup.php'>here</a> to go to the sign up page.</p>
+        <p>This service shows you a list of best sellers (TOP 150) of a month, and you can preview or save books in your own wish list.</p>
+        <p>If you are a new user click <a href='http://web.engr.oregonstate.edu/~takahasb/Final/signup.php'>here</a> to go to the sign-up page.</p>
         <h3>LOGIN</h3>";
 
   /*$que="CREATE TABLE mybooks_users(id INT PRIMARY KEY AUTO_INCREMENT, username VARCHAR (255) UNIQUE NOT NULL, email VARCHAR (255) UNIQUE NOT NULL, 
@@ -31,7 +32,7 @@ if(session_status() == PHP_SESSION_ACTIVE){
             die();
   };*/
 
-    
+
 
 
   echo  '<form action= "http://web.engr.oregonstate.edu/~takahasb/Final/database.php" id="login" method= "POST"  onsubmit="check_login(); return false" >
