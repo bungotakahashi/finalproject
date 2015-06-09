@@ -44,12 +44,18 @@ if(session_status() == PHP_SESSION_ACTIVE){
   else{$hello="How's it going, ";}
 	echo "<h1 id='hello'>$hello $_SESSION[username] \(•_•)/</h1>" ;
 
-	$logout="<button id='logout'><a href=user.php?logout=1>LOGOUT</a></button>";
+	//$logout="<button id='logout'><a href=user.php?logout=1>LOGOUT</a></button>";
+    $main='<form action="user.php" method="GET">
+      <input type="hidden" name="logout" value=1>
+      <input type="submit" value="LOGOUT" id="logout"/>
+      </form>';
+  echo "$main<br>";
 	echo "$logout<br>";
  
   echo "<br><br>";
   echo "MONTH(1-12):<input type= 'number' id = 'month'>";
   echo '<input type="button" id="fetch" value="Best sellers" onclick="fetchData()"></input>';
+
   //echo '<input type= "submit" value="Best Sellers"><br>';
   echo '<div class= "contents">
           <div id= "books">
