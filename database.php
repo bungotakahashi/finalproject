@@ -1,4 +1,5 @@
 <?php
+ini_set('session.save_path', '/nfs/stak/students/t/takahasb/public_html/Final/session');
 //ini_set('display_errors', 'On');
 	 $hostname = 'oniddb.cws.oregonstate.edu';
      $databaseName = 'takahasb-db';
@@ -176,7 +177,7 @@
                 $_SESSION['email'] = $r3;
                 $_SESSION['correct'] = 1;
                 //$message = "wrong answer";
-                //echo "<script type='text/javascript'>alert('$message');</script>";
+                //echo "<script type='text/javascript'>alert('aaa');</script>";
                 header("Location: user.php", true);
             }
             else{
@@ -184,7 +185,7 @@
             }
         }
         else{
-            header("Location: final_main.php?login=2");
+              header("Location: final_main.php?login=2");
         }
 
         

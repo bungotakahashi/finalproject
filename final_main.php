@@ -1,4 +1,5 @@
 <?php
+ini_set('session.save_path', '/nfs/stak/students/t/takahasb/public_html/Final/session');
 session_start();
 if(session_status() == PHP_SESSION_ACTIVE){
   if(isset($_SESSION['correct']) && $_SESSION['correct']==1){
@@ -12,6 +13,7 @@ if(session_status() == PHP_SESSION_ACTIVE){
       <meta charset= "UTF-8">
       <title>MYBOOKS</title>
       <link rel="stylesheet" href="final.css">
+      <script type="text/javascript" src="https://www.google.com/jsapi"></script>
       <script src= "final.js"></script>
       </head>
     <body id = "main">';
@@ -52,8 +54,7 @@ if(session_status() == PHP_SESSION_ACTIVE){
       }
     }
     echo '</form>';
-            // logout function is in content1.php in my program structure.
-      
+                  
     echo '</body>
     </html>';
     }

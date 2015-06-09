@@ -433,6 +433,7 @@ var favorites = function(book) {
   req.send();
 };
 
+//aaaaa
 
 var load = function(){
 
@@ -642,7 +643,7 @@ var url = document.createElement("a");
   tbl2.appendChild(tblBody2);
   box2.appendChild(tbl2);
   tbl2.style.border = "thin solid black";
-}
+};
 
 
 

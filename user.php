@@ -1,7 +1,12 @@
 <?php
+ini_set('session.save_path', '/nfs/stak/students/t/takahasb/public_html/Final/session');
 session_start();
+if(session_status() != PHP_SESSION_ACTIVE){
+  header("Location: final_main.php?6");
+}
 if(!(isset($_SESSION['correct']) && $_SESSION['correct']==1)){
-    header("Location: final_main.php");
+  //echo "<script type='text/javascript'>alert($_SESSION[correct]);</script>";
+    header("Location: final_main.php?3");
   }
 if(isset($_GET['logout']) && $_GET['logout'] == '1'){  // this destroy code is also from the lecture code.
   //$_SESSION = array();
@@ -20,7 +25,17 @@ echo '<!DOCTYPE html>
     <script src= "final.js"></script>
 </head>
 <body>';
-
+/*echo '<script>
+google.load("books", "0", {"language": "US"});
+function initialize(a) {
+  var isbn="ISBN:"+a;
+  var viewer = new google.books.DefaultViewer(document.getElementById("viewerCanvas"));
+  viewer.load(isbn, notfound);
+};
+function notfound(){
+  alert("This book is not available now. Probably this book is very new.");
+};
+</script>';*/
 if(session_status() == PHP_SESSION_ACTIVE){
   $x=rand (1, 3);
   $hello="";
